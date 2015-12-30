@@ -15,3 +15,7 @@
 # Ignore vim backups
 .sw*
 .*.sw*
+
+# Debugging files
+chk.log
+chk.txt
