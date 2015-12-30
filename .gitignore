@@ -19,3 +19,4 @@
 # Debugging files
 chk.log
 chk.txt
+.byebug_history

@@ -40,7 +40,12 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
-  gem 'rspec-rails'
+  gem 'database_cleaner'
+  gem 'faker'
+  gem 'factory_girl_rails'
+
+  # steak acceptance tests along with capybara and, of course, steak acceptance tests
+  gem 'steak'
 end
 
 group :development do
