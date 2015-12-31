@@ -1,0 +1,37 @@
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>RiotControl Demo</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="comments.css">
+
+    <!--[if lt IE 9]>
+    <script src="js/es5-shim.js"></script>
+    <script src="js/html5-shiv.js"></script>
+    <script>html5.addElements('todoapp')</script>
+    <![endif]-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  </head>
+
+  <body>
+
+    <comments></comments>
+
+    <script src="./riot+compiler.js"></script>
+    <script src="riotcontrol.js"></script>
+    <script src="comments_widget.js"></script>
+    <script src="comments-02.tag" type="riot/tag"></script>
+    <script src="comment-02.tag" type="riot/tag"></script>
+      
+    <script>
+      var commentsWidget = new CommentsWidget() // Create a CommentsWidget instance.
+      RiotControl.addStore(commentsWidget) // Register the widget in central dispatch.
+      riot.mount('comments') // Kickoff the Riot app.
+    </script>
+
+  </body>
+
+</html>
