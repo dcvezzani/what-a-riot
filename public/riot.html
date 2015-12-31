@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+
+  <hello-world></hello-world>
+
+  <script src="app.tag" type="riot/tag"></script>
+  <script src="./riot+compiler.js"></script>
+  <script>
+riot.mount('*', { greeting: 'Hola', punctuation: '?'})
+  </script>
+</body>
+</html>

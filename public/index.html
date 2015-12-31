@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+  
+  <comments></comments>
+
+  <script src="comments.tag" type="riot/tag"></script>
+  <script src="./riot+compiler.js"></script>
+  <script>
+    riot.tag('raw', '<span></span>', function(opts) {   
+        this.root.innerHTML = opts.r;
+    });
+
+    riot.mount('*', { greeting: 'Hola', punctuation: '?', r: 'Some <b>raw</b> HTML'})
+  </script>
+</body>
+</html>
