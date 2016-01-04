@@ -7,14 +7,14 @@ body {
 a {
   text-decoration: none;
   color: grey;
-  display: block;
-  max-width: 400px;
-  margin: 5% auto;
+  /* display: block; */
+  max-width: 500px;
+  /* margin: 5% auto; */
 }
 
 comments {
   display: block;
-  max-width: 400px;
+  max-width: 500px;
   margin: 5% auto;
 }
 
@@ -59,3 +59,28 @@ li {
 label {
   cursor: pointer;
 }
+
+div.item .url {
+  display: none; 
+}
+
+div.item .details {
+  font-size: 70%;
+}
+
+comment-update{
+  display: none; 
+}
+
+div.update-form .row-entry {
+  width: 400px; 
+  float: left; 
+}
+div.update-form .row-entry .label{
+  width: 100px; 
+  float: left; 
+}
+div.update-form .row-entry .field{
+  float: right; 
+}
+

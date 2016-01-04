@@ -1,9 +1,62 @@
+<comment-update>
+  <div class="update-form">
+    <form onsubmit={ _update }>
+      <div class="row-entry">
+        <div class="label">Author ID</div>
+        <div class="field">
+          <input type="text" name="comment[author_id]" value="{ author_id }" />
+        </div>
+      </div>
+      
+      <div class="row-entry">
+        <div class="label">Body</div>
+        <div class="field">
+          <input type="text" name="comment[body]" value="{ body }" />
+        </div>
+      </div>
+
+      <p>{ url }</p>
+      <button>Update #{ id }</button>
+    </form>
+  </div>
+
+  var self = this
+  self.url = null
+
+  init(data = {}){
+    $(self.root).show()
+    
+    self.author_id = data.author_id
+    self.body = data.body
+    self.url = data.url
+
+    self.update()
+  }
+
+  _update(e) {
+    var form = $(e.target)
+    var data = $(form).serialize()
+    RiotControl.trigger('comment_update', {url: self.url, data: data}, function(){
+      $(self.root).hide(); 
+    })
+  }
+
+</comment-update>
+
 <comment>
 
   <h3>{ opts.title }</h3>
+  <p class="message" style="display: block; ">{ message }</p>
 
   <ul>
-    <li each={ items }> { body } </li>
+    <li each={ items }> 
+    <div class="item">
+      <div class="details">{ id }, { author_id }, { recorded_on } | <a href="http://localhost:3672/comments/{ id }">show</a> | <a href="http://localhost:3672/comments/{ id }" onclick={ edit }>edit</a> | <a href="http://localhost:3672/comments/{ id }" onclick={ remove }>delete</a></div>
+      <div class="body">{ body }</div>
+      <div class="url">{ url }</div>
+    </div>
+
+    </li>
   </ul>
 
   <ol style="display: none;">
@@ -15,10 +68,11 @@
   </ol>
 
   <form onsubmit={ add }>
-    <input name="input" onkeyup={ edit }>
+    <input name="input" onkeyup={ xedit }>
     <button disabled={ !text }>Add #{ items.length + 1 }</button>
   </form>
-  <button disabled={ !items.length } onclick={ remove }>Remove</button>
+
+  <comment-update name="comment_update"></comment-update>
 
   var self = this
   self.disabled = true
@@ -36,8 +90,35 @@
     self.update()
   }) 
 
-  edit(e) {
+  RiotControl.on('message_changed', function(message, options = {}) {
+    $(self.root).find("p.message").hide()
+
+    self.message = message
+    self.update()
+
+    /* if(options && options.fade){ */
+    /*   $(self.root).find("p.message").fadeIn( "slow" ).delay(2000).fadeOut( "slow" ); */
+    /* } else { */
+      $(self.root).find("p.message").show()
+    /* } */
+  }) 
+
+  xedit(e) {
     self.text = e.target.value
+  }
+
+  edit(e) {
+    var value = $(e.target).closest("div.item").find("div.body").text()
+    /* $(self.root).find("input[name=input]").val(value) */
+    $(e.target).closest("div.item").find("div.url").text(e.target.href)
+    /* self.text = value */
+
+    data = {
+      author_id: 1, 
+      body: value, 
+      url: e.target.href
+    }
+    self.tags.comment_update.init(data)
   }
 
   add(e) {
@@ -45,7 +126,7 @@
       // Trigger event to all stores registered in central dispatch.
       // This allows loosely coupled stores/components to react to same events.
       RiotControl.trigger('comment_add', { body: self.text })
-      console.log(self.input.value)
+      console.log("self.input.value: " + self.input.value)
       self.text = self.input.value = ''
     }
   }
@@ -57,7 +138,8 @@
   }
 
   remove(e) {
-      RiotControl.trigger('comment_remove')
+    $(e.target).closest("div.item").find("div.url").text(e.target.href)
+    RiotControl.trigger('comment_remove', e.target.href)
   }
 
 </comment>
