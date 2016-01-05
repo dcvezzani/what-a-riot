@@ -45,7 +45,7 @@
 
 <messages>
   <message></message>
-  <button name="toggle_messages" onclick={ toggleMessages }>Show all messages</button>
+  <button name="toggle_messages" onclick={ toggleMessages } style="display: none;">Show all messages</button>
   
   <div class="list"></div>
 
@@ -54,7 +54,7 @@
   toggleMessages(){
     var messageEntries = $(self.root).find("div.list div")
     var curButton = $(self.root).find("button:visible")
-    var curStatus = ($(curButton).text().match(/^Show/)) ? 'active' : 'inactive'
+    var curStatus = (curButton.length > 0 && $(curButton).text().match(/^Show/)) ? 'active' : 'inactive'
 
     if(curStatus == 'active'){
       $(curButton).text("Hide all messages")

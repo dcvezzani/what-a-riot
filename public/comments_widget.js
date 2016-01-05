@@ -23,7 +23,7 @@ function CommentsWidget() {
 
     var theDate = new Date();
     var fdata = {'comment[author_id]': 1, 
-      'comment[body]': newTodo["body"], 
+      'comment[body]': newTodo.body, 
       'comment[recorded_on(1i)]': theDate.getFullYear(), 
       'comment[recorded_on(2i)]': (theDate.getMonth()+1), 
       'comment[recorded_on(3i)]': theDate.getDate(), 
@@ -97,7 +97,14 @@ function CommentsWidget() {
   })
 
   self.on('comment_init', function() {
-    self.trigger('comments_changed', self.comments)
+    $.when( self.list() ).then(
+      function(data){
+        self.comments = data
+        self.trigger('comments_changed', self.comments)
+      }, 
+      function(status){ console.log("error: "   + status) }, 
+      function(status){ console.log("waiting: " + status) }
+      );
   })
 
   // The store emits change events to any listening views, so that they may react and redraw themselves.
@@ -165,13 +172,4 @@ function CommentsWidget() {
     return dfd.promise();
   }
 
-  // when the js is loaded, initialize with list of comments
-  $.when( self.list() ).then(
-    function(data){
-      self.comments = data
-      self.trigger('comments_changed', self.comments)
-    }, 
-    function(status){ console.log("error: "   + status) }, 
-    function(status){ console.log("waiting: " + status) }
-    );
 }
