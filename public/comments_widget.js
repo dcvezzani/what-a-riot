@@ -31,7 +31,7 @@ function CommentsWidget() {
       'comment[recorded_on(4i)]': theDate.getHours(), 
       'comment[recorded_on(5i)]': theDate.getMinutes()
     }
-    console.log("fdata: " + fdata)
+    // console.log("fdata: " + fdata)
 
     var newItem = null;
 

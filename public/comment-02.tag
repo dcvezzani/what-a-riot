@@ -43,10 +43,48 @@
 
 </comment-update>
 
+<messages>
+  <message></message>
+  <div class="list">
+  </div>
+
+  var self = this
+
+  add(msg){
+    var newMsg = self.tags.message.clone(msg)
+    console.log($(newMsg))
+
+    var messages = $(self.root).find("div.list")
+    $(newMsg).appendTo(messages).fadeIn( "slow" ).delay(2000).fadeOut( "slow" )
+  }
+</messages>
+
+<message>
+  <div class="message" style="display: none; ">{ content }</div>
+
+  var self = this
+
+  init(content){
+    self.content = content
+    self.update()
+  }
+
+  clone(content){
+    self.content = content
+    self.update()
+
+    var cloned = $(self.root).find('div.message').clone()
+    self.content = ''
+    self.update()
+
+    return cloned
+  }
+</message>
+
 <comment>
 
   <h3>{ opts.title }</h3>
-  <p class="message" style="display: block; ">{ message }</p>
+  <messages></messages>
 
   <ul>
     <li each={ items }> 
@@ -91,16 +129,7 @@
   }) 
 
   RiotControl.on('message_changed', function(message, options = {}) {
-    $(self.root).find("p.message").hide()
-
-    self.message = message
-    self.update()
-
-    /* if(options && options.fade){ */
-    /*   $(self.root).find("p.message").fadeIn( "slow" ).delay(2000).fadeOut( "slow" ); */
-    /* } else { */
-      $(self.root).find("p.message").show()
-    /* } */
+    self.tags.messages.add(message)
   }) 
 
   xedit(e) {
@@ -126,7 +155,7 @@
       // Trigger event to all stores registered in central dispatch.
       // This allows loosely coupled stores/components to react to same events.
       RiotControl.trigger('comment_add', { body: self.text })
-      console.log("self.input.value: " + self.input.value)
+      // console.log("self.input.value: " + self.input.value)
       self.text = self.input.value = ''
     }
   }
