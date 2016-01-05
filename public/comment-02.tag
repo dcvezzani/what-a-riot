@@ -45,10 +45,25 @@
 
 <messages>
   <message></message>
-  <div class="list">
-  </div>
+  <button name="toggle_messages" onclick={ toggleMessages }>Show all messages</button>
+  
+  <div class="list"></div>
 
   var self = this
+
+  toggleMessages(){
+    var messageEntries = $(self.root).find("div.list div")
+    var curButton = $(self.root).find("button:visible")
+    var curStatus = ($(curButton).text().match(/^Show/)) ? 'active' : 'inactive'
+
+    if(curStatus == 'active'){
+      $(curButton).text("Hide all messages")
+      $(messageEntries).show()
+    } else {
+      $(curButton).text("Show all messages")
+      $(messageEntries).hide()
+    }
+  }
 
   add(msg){
     var newMsg = self.tags.message.clone(msg)
@@ -56,6 +71,16 @@
 
     var messages = $(self.root).find("div.list")
     $(newMsg).appendTo(messages).fadeIn( "slow" ).delay(2000).fadeOut( "slow" )
+
+    // clean out messages
+    if( false ){
+      var messageEntries = $(self.root).find("div.list div")
+      var msgCount = $(messageEntries).length
+      while(msgCount > 5){
+        $(messageEntries).first().remove()
+        msgCount -= 1
+      }
+    }
   }
 </messages>
 

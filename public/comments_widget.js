@@ -19,7 +19,6 @@ function CommentsWidget() {
   self.on('comment_add', function(newTodo) {
     // self.comments.push(newTodo) 
 
-    self.trigger('message_changed', "")
     // self.trigger('message_changed', "adding")
 
     var theDate = new Date();
@@ -59,8 +58,6 @@ function CommentsWidget() {
     // self.comments.pop()
     // self.trigger('comments_changed', self.comments)
 
-    self.trigger('message_changed', "")
-
     $.when( self.remove(url) ).then(
       function(data){
         return self.list()
@@ -80,8 +77,6 @@ function CommentsWidget() {
   })
 
   self.on('comment_update', function(fdata = {}, postproc = function(){}) {
-    self.trigger('message_changed', "")
-
     $.when( self._update(fdata) ).then(
       function(data){
         postproc()
