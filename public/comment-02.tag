@@ -65,14 +65,38 @@
     }
   }
 
+  msgLength(){
+    console.log("asdf")
+    return $(self.root).find("div.list div:visible").length
+  }
+
   add(msg){
     var newMsg = self.tags.message.clone(msg)
     console.log($(newMsg))
 
     var messages = $(self.root).find("div.list")
-    $(newMsg).appendTo(messages).fadeIn( "slow" ).delay(2000).fadeOut( "slow" )
+    console.log(self.msgLength())
+
+    // start action; should only need to hide once in a given session
+    // a 'session' is active as long as there are messages visible
+    if(self.msgLength() == 0){
+      var curButton = $(self.root).find("button:visible")
+      $(curButton).hide()
+    }
+
+    $(newMsg).appendTo(messages).fadeIn( "slow" ).delay(2000).fadeOut( "slow", function(){
+      console.log(self.msgLength())
+
+      // only restore the button if the 'session' is going 'inactive'
+      if(self.msgLength() == 0){
+        var curButton = $(self.root).find("button")
+        $(curButton).show()
+      }
+    })
 
     // clean out messages
+    // to make sure that messages aren't kept around forever
+    // disabled for now
     if( false ){
       var messageEntries = $(self.root).find("div.list div")
       var msgCount = $(messageEntries).length
