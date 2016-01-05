@@ -9,6 +9,11 @@ Start up PostgreSql if it's not running already.  Set up databases and tables.
     rake db:test:prepare
 
 
+Run all tests.
+
+    rspec
+
+
 Watch for changes to files and run appropriate tests.
 
     rake watchr
