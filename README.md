@@ -1,5 +1,3 @@
-README.md
-
 Getting started
 ---------------
 
@@ -27,9 +25,15 @@ Creating a new integration test.
 
     rails g steak:spec comments
 
+Starting the Rails server.
+
+    ./start.sh
+
 
 Riot Examples
 -------------
+
+Once you have set up the project, you can access the following.
 
 * [Simple example](http://localhost:3672/riot.html)
 * [RiotControl example](http://localhost:3672/index-02.html) starting with a [static data source](https://github.com/jimsparkman/RiotControl/tree/master/demo) and moving to a dynamic one using service calls
